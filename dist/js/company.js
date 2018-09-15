@@ -1,0 +1,1 @@
+"use strict";require(["config"],function(){require(["jquery","header","footer","cookie"],function(i,e,r){e.init(),r.init()})});

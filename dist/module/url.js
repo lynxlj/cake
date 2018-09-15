@@ -1,0 +1,1 @@
+"use strict";define(function(){return{url:"http://localhost/gulp-project-cake/dist/server/"}});

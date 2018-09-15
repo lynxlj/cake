@@ -1,0 +1,54 @@
+@import "fixStyle";
+.register-content{
+    width: 100%;
+    height: 674px;
+    min-height: 208px;
+    position: relative;
+    background: url(../images/logImg/passport-banner.jpg) no-repeat top center;
+    .register-form{
+        position: absolute;
+        width: 410px;
+        top: 114px;
+        right: 80px;
+        padding: 28px 42px;
+        border: 1px #e9e9e9 solid;
+        background: #fff;
+        text-align: center;
+        .form-title{
+            height: 25px;
+            h2{
+                 font-weight: normal;
+            }   
+        }
+        .form-content ul li{
+            margin: 10px 0;
+            input{
+                width: 290px;
+                padding: 0 5px;
+                height: 36px;
+                border: 1px solid #efefef;
+                border-radius: 2px;
+                outline: none;
+                color: #442818;
+                line-height: 38px;
+            }
+            #register-btn{
+                background: #442818;
+                border: 2px;
+                height: 48px;
+                width: 302px;
+                line-height: 48px;
+                text-align: center;
+                cursor: pointer;
+                color: #fff;
+                margin: 20px auto;
+            }
+            .error{
+                display: none;
+                color: red;
+            }
+            .error.ac{display: block;}
+        }
+    }
+}
+

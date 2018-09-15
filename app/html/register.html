@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="/css/register.css">
+		<script type="text/javascript" src="/libs/require.js" data-main="/js/register.js"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<div class="header" id="header"></div>
+		<!--content-->
+		<div class="register-content">
+			<div class="register-form">
+				<div class="form-title">
+					<h2>账户密码注册</h2>
+				</div>
+				<div class="form-content">
+					<form action="" id="register-form">
+						<ul>
+							<li>
+								<input type="text"  maxlength="11" placeholder="输入手机号码" id="telephone" >
+								<br/><span class="error">必须填写手机号</span>
+							</li>
+							<li>
+								<input type="password" name="password" maxlength="20" placeholder="密码：请输入6～20字符" id="password">
+								<br/><span class="error">必须填写密码</span>
+							</li>
+							<li>
+								<input type="password" name="rePassword" maxlength="20" placeholder="确认密码" id="isPassword" >
+								<br/><span class="error">两次输入密码错误</span>
+							</li>
+							<li style="height: 36px;">
+								<input type="text" id="isCode" placeholder="输入验证码" style="width: 180px;float: left;margin-left: 17px;"/><span id="cont" style="display: inline-block;width: 85px;height:36px;background: #442818;color:white;float: right;margin-right: 17px;font-size: 18px;line-height: 36px;"></span>
+								
+							<li ><a id="change-cont" style="display: block;float: right;margin-right: 35px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none; user-select:none;">换一张</a>
+								<br/><span class="error">验证码错误</span>
+							</li>
+							<li>
+								<input type="button" class="login-button" value="注册" id="register-btn">
+							</li>
+						</ul>
+						<div class="register-remember">
+							<label>
+							<input type="checkbox" name="agree" checked="checked">
+							&nbsp;已阅读并同意
+							</label>
+							<a href="/article-agreement-36.html">21客会员协议</a>和
+							<a href="/article-policy-35.html">隐私保护政策</a>
+					</div>
+					</form>
+				</div>
+				<div class="register-bottom">
+					
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+		<div class="footer" id="footer"></div>
+	</body>
+</html>

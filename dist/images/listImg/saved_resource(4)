@@ -1,0 +1,117 @@
+;
+/*!
+ * author:jieyou
+ * see https://github.com/jieyou/lazyload
+ * part of the code fork from tuupola's https://github.com/tuupola/jquery_lazyload
+ */
+(function(factory){if(typeof define==='function'&&define.amd){define(['jquery'],factory)}else{factory(window.jQuery||window.Zepto)}})(function($,undefined){var w=window,$window=$(w),defaultOptions={threshold:0,failure_limit:0,event:'scroll',effect:'show',effect_params:null,container:w,data_attribute:'original',data_srcset_attribute:'original-srcset',skip_invisible:true,appear:emptyFn,load:emptyFn,vertical_only:false,minimum_interval:300,use_minimum_interval_in_ios:false,url_rewriter_fn:emptyFn,no_fake_img_loader:false,placeholder_data_img:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC',placeholder_real_img:'http://ditu.baidu.cn/yyfm/lazyload/0.0.1/img/placeholder.png'},isIOS=(/(?:iphone|ipod|ipad).*os/gi).test(navigator.appVersion),isIOS5=isIOS&&(/(?:iphone|ipod|ipad).*os 5/gi).test(navigator.appVersion),type
+function emptyFn(){}
+type=(function(){var object_prototype_toString=Object.prototype.toString
+return function(obj){return object_prototype_toString.call(obj).replace('[object ','').replace(']','')}})()
+function belowthefold($element,options){var fold
+if(options._$container==$window){fold=('innerHeight'in w?w.innerHeight:$window.height())+$window.scrollTop()}else{fold=options._$container.offset().top+options._$container.height()}
+return fold<=$element.offset().top-options.threshold}
+function rightoffold($element,options){var fold
+if(options._$container==$window){fold=$window.width()+($.fn.scrollLeft?$window.scrollLeft():w.pageXOffset)}else{fold=options._$container.offset().left+options._$container.width()}
+return fold<=$element.offset().left-options.threshold}
+function abovethetop($element,options){var fold
+if(options._$container==$window){fold=$window.scrollTop()}else{fold=options._$container.offset().top}
+return fold>=$element.offset().top+options.threshold+$element.height()}
+function leftofbegin($element,options){var fold
+if(options._$container==$window){fold=$.fn.scrollLeft?$window.scrollLeft():w.pageXOffset}else{fold=options._$container.offset().left}
+return fold>=$element.offset().left+options.threshold+$element.width()}
+function checkAppear($elements,options){var counter=0
+$elements.each(function(i,e){var $element=$elements.eq(i)
+if(options.skip_invisible&&!($element.width()||$element.height())&&$element.css("display")!=="none"){return}
+function appear(){$element.trigger('_lazyload_appear')
+counter=0}
+if(options.vertical_only){if(abovethetop($element,options)){}else if(!belowthefold($element,options)){appear()}else{if(++counter>options.failure_limit){return false}}}else{if(abovethetop($element,options)||leftofbegin($element,options)){}else if(!belowthefold($element,options)&&!rightoffold($element,options)){appear()}else{if(++counter>options.failure_limit){return false}}}})}
+function getUnloadElements($elements){return $elements.filter(function(i,e){return!$elements.eq(i)._lazyload_loadStarted})}
+if(!$.fn.hasOwnProperty('lazyload')){$.fn.lazyload=function(options){var $elements=this,isScrollEvent,isScrollTypeEvent,scrollTimer=null,hasMinimumInterval
+if(!$.isPlainObject(options)){options={}}
+$.each(defaultOptions,function(k,v){if($.inArray(k,['threshold','failure_limit','minimum_interval'])!=-1){if(type(options[k])=='String'){options[k]=parseInt(options[k],10)}else{options[k]=v}}else if(k=='container'){if(options.hasOwnProperty(k)){if(options[k]==w||options[k]==document){options._$container=$window}else{options._$container=$(options[k])}}else{options._$container=$window}
+delete options.container}else if(defaultOptions.hasOwnProperty(k)&&(!options.hasOwnProperty(k)||(type(options[k])!=type(defaultOptions[k])))){options[k]=v}})
+isScrollEvent=options.event=='scroll'
+isScrollTypeEvent=isScrollEvent||options.event=='scrollstart'||options.event=='scrollstop'
+$elements.each(function(i,e){var element=this,$element=$elements.eq(i),placeholderSrc=$element.attr('src'),originalSrcInAttr=$element.attr('data-'+options.data_attribute),originalSrc=options.url_rewriter_fn==emptyFn?originalSrcInAttr:options.url_rewriter_fn.call(element,$element,originalSrcInAttr),originalSrcset=$element.attr('data-'+options.data_srcset_attribute),isImg=$element.is('img')
+if($element._lazyload_loadStarted==true||placeholderSrc==originalSrc){$element._lazyload_loadStarted=true
+$elements=getUnloadElements($elements)
+return}
+$element._lazyload_loadStarted=false
+if(isImg&&!placeholderSrc){$element.one('error',function(){$element.attr('src',options.placeholder_real_img)}).attr('src',options.placeholder_data_img)}
+$element.one('_lazyload_appear',function(){var effectParamsIsArray=$.isArray(options.effect_params),effectIsNotImmediacyShow
+function loadFunc(){if(effectIsNotImmediacyShow){$element.hide()}
+if(isImg){if(originalSrcset){$element.attr('srcset',originalSrcset)}
+if(originalSrc){$element.attr('src',originalSrc)}}else{$element.css('background-image','url("'+originalSrc+'")')}
+if(effectIsNotImmediacyShow){$element[options.effect].apply($element,effectParamsIsArray?options.effect_params:[])}
+$elements=getUnloadElements($elements)}
+if(!$element._lazyload_loadStarted){effectIsNotImmediacyShow=(options.effect!='show'&&$.fn[options.effect]&&(!options.effect_params||(effectParamsIsArray&&options.effect_params.length==0)))
+if(options.appear!=emptyFn){options.appear.call(element,$elements.length,options)}
+$element._lazyload_loadStarted=true
+if(options.no_fake_img_loader||originalSrcset){if(options.load!=emptyFn){$element.one('load',function(){options.load.call(element,$elements.length,options)})}
+loadFunc()}else{$('<img />').one('load',function(){loadFunc()
+if(options.load!=emptyFn){options.load.call(element,$elements.length,options)}}).attr('src',originalSrc)}}})
+if(!isScrollTypeEvent){$element.on(options.event,function(){if(!$element._lazyload_loadStarted){$element.trigger('_lazyload_appear')}})}})
+if(isScrollTypeEvent){hasMinimumInterval=options.minimum_interval!=0
+options._$container.on(options.event,function(){if(isScrollEvent&&hasMinimumInterval&&(!isIOS||options.use_minimum_interval_in_ios)){if(!scrollTimer){scrollTimer=setTimeout(function(){checkAppear($elements,options)
+scrollTimer=null},options.minimum_interval)}}else{return checkAppear($elements,options)}})}
+$window.on('resize load',function(){checkAppear($elements,options)})
+if(isIOS5){$window.on('pageshow',function(e){if(e.originalEvent&&e.originalEvent.persisted){$elements.trigger('_lazyload_appear')}})}
+$(function(){checkAppear($elements,options)})
+return this}}});$(document).ready(function(){var fuc={};fuc.init=function(){this.addCartAnimate();};fuc.addCartAnimate=function(){$(document).on('click','.pro-specifications',function(event){event.stopPropagation();});};fuc.init();var galleryCache={currentCity:{},goodsList:{},products:{},virtualCatId:0,cartUrl:'/cart.do',init:function(){this.virtualCatId=$('input[name=virtualCatId]').val();this.currentCity=cache.getCurrentCity();},setGoodsList:function(list){this.goodsList=list;},getGoodsList:function(){return this.goodsList;},setVirtualCatId:function(virtualCatId){this.virtualCatId=virtualCatId;},getVirtualCatId:function(){return this.virtualCatId;},setProducts:function(products){this.products=products;},getProducts:function(){return this.products;}};galleryCache.init();if(galleryCache.currentCity){var form={};form.catId=galleryCache.getVirtualCatId();form.cityId=galleryCache.currentCity.id;form.channel='pc';api.getJsonp('Gallery.goodsList','1.0',form,function(res){if(res.status!=='ok'){popUpWindow({title:res.message,popType:2});$('.pro-list-empty').show();return false;}
+$('.pro-list-filter').append(goodsList.catHtml(res.data.cat)).append(goodsList.tagsHtml(res.data.tags)).show();$('#list-loading').hide();var html=''
+html+=goodsList.goodsListHtml(res.data.goodsArr);html+=goodsList.sellOutHtml();$('.pro-list-box').html(html).show();galleryCache.setGoodsList(res.data.goodsArr);if(res.data.hasOwnProperty('name')){$('.pro-list-filter').find('.cat-list a').each(function(){if(res.data.name==$(this).html()){$(this).click();return true;}});}
+$("img.lazy").lazyload({effect:"fadeIn"});});}
+$('.pro-list-filter').on('click','.cat-list a',function(){var dd=$(this).parent('dd');var catActiveIds=$(this).attr('data-ids');$('.cat-list dd').removeClass('active');dd.addClass('active');var tagActiveIds=new Array(0);var subTag=$('dd.sub-tag');$('dd.tag-title').addClass('active');subTag.removeClass('active');subTag.addClass('disabled');goodsList.searchHtml(catActiveIds,tagActiveIds);for(var k in goodsList.searchCatList){if(!goodsList.searchCatList.hasOwnProperty(k)){continue;}
+var idStr=goodsList.searchCatList[k].split(',').join('-');$('dd.sub-cat-'+idStr).removeClass('disabled');}
+for(var m in goodsList.searchTagList){if(!goodsList.searchTagList.hasOwnProperty(m)){continue;}
+$('dd.sub-tag-'+goodsList.searchTagList[m]).removeClass('disabled');}
+$("img.lazy").unbind().lazyload({effect:"fadeIn"});});$('.pro-list-filter').on('click','.tag-list a',function(){var dd=$(this).parent('dd');if(dd.hasClass('disabled')){return false;}
+$(this).parents('dl').children('dd').removeClass('active');dd.addClass('active');var catActiveIds=$('.cat-list dd.active a').attr('data-ids');var tagActiveIds=$('.tag-list dd.active').map(function(){return $(this).children('a').attr('data-id');}).get();goodsList.searchHtml(catActiveIds,tagActiveIds);$("img.lazy").unbind().lazyload({effect:"fadeIn"});});$('.pro-list-box').on('click','.pro-list-addcart',function(res){var form={};form.cityId=galleryCache.currentCity.id;form.channel='pc';form.goodsId=$(this).attr('data-id');var productSpec=$(this).parents('li').children('.pro-specifications');productSpec.animate({bottom:0},1000,function(){$("#layer-box").show();$(document).on('click',function(){productSpec.hide().css('bottom','-100%');$("#layer-box").hide();});});productSpec.html(goodsList.cartWaitHtml()).show();var analysisForm={};analysisForm.name=$(this).attr('name');analysisForm.tag='-';analysisForm.divName=$(this).attr('name');analysisForm.url=$(this).attr('href');analysis.action('clickbond',analysisForm);api.getJsonp('Goods.goodsDetail','1.0',form,function(res){if(res.status!=='ok'){popUpWindow({title:res.message,popType:2});return false;}
+if(res.data.type=='multiply'){goodsList.specHtmlMultiply(res.data,form.goodsId,productSpec);}else{galleryCache.setProducts(res.data.productsArr);productSpec.html(goodsList.cartHtml(res.data.productsArr,form.goodsId)).show();var keys=Object.getOwnPropertyNames(res.data.productsArr);if(res.data.productsArr!==undefined&&keys.length===1){fastBuy(productSpec);}}},'json');});$('.pro-list-box').on('click','.pro-specifications ul.normal-spec>li>a',function(){var productId=$(this).attr('data-id');var productSpec=$(this).parents('.pro-specifications');productSpec.find('.normal-spec').find('a').removeClass('active');$(this).addClass('active');var products=galleryCache.getProducts();for(var i in products){if(!products.hasOwnProperty(i)){continue;}
+var product=products[i];if(product.id==productId){$('input[name=productId]').val(productId);productSpec.children('h4').html('￥'+product.price);break;}}});$('.pro-list-box').on('click','.pro-specifications .pro-buy-now',function(){var productSpec=$(this).parents('.pro-specifications');var analysisForm={};analysisForm.name=$(this).attr('name');analysisForm.tag='-';analysisForm.divName=$(this).attr('name');analysisForm.url='-';analysis.action('clickbond',analysisForm);addCartAction(productSpec,function(res){if(res.status!=='ok'){popUpWindow({title:res.message,popType:2});return false;}
+$("#layer-box").hide();productSpec.html(goodsList.cartSuccessHtml(galleryCache.cartUrl,false)).css('bottom',0).show();location.href=galleryCache.cartUrl;});});function fastBuy(productSpec){addCartAction(productSpec,function(res){if(res.status!=='ok'){popUpWindow({title:res.message,popType:2});return false;}
+window.cartAmount();$("#layer-box").hide();productSpec.html(goodsList.cartSuccessHtml(galleryCache.cartUrl,true)).css('bottom',0).show();setTimeout(function(){productSpec.css('bottom','-100%').hide();},2000);});}
+$('.pro-list-box').on('click','.pro-specifications .pro-add-cart',function(){fastBuy($(this).parents('.pro-specifications'));});function addCartAction(productSpec,foo){var form={};form.productId=$('input[name=productId]').val();form.quantity=1;if(form.productId===''){popUpWindow({title:'请选择商品规格',popType:2});return false;}
+var analysisForm={};analysisForm.name=productSpec.find('.pro-add-cart').attr('name');analysisForm.tag='-';analysisForm.divName=productSpec.find('.pro-add-cart').attr('name');analysisForm.url='-';analysis.action('clickbond',analysisForm);productSpec.html(goodsList.cartWaitHtml()).show();addCartTrack(form.productId);$.post('/cart-add-goods.do',form,function(res){productSpec.css('bottom','-100%');$.isFunction(foo)&&foo(res);},'json');}
+$('.pro-list-box').on('click','.to-notify-btn',function(){var dialog=$(this).next();if(cache.hasLogin===false){dialog.html('<div><div><p>先登录/注册再设置</p><a href="/passport-login.do" class="details-go-cart go-login">去登录/注册</a></div><i></i></div><i></i>').show();setTimeout(function(){dialog.hide();},2000);return false;}
+var form={};form.productId=$(this).attr('data-id');if(form.productId==''){popUpWindow({title:'请选择产品！',popType:2});return false;}
+$.post('/to-notify.do',form,function(res){if(res.status!=='ok'){popUpWindow({title:res.message,popType:2});return false;}
+var delay=2000;if(res.data.need_login!==undefined){delay=4000;dialog.html('<div><p>先登录/注册再设置</p><a href="/passport-login.do" class="details-go-cart go-login">去登录/注册</a></div><i></i>').show();}else{dialog.html('<div><p>到货提醒设置成功！</p></div><i></i>').show();}
+setTimeout(function(){dialog.hide();},delay);},'json');});var goodsList={searchCatList:null,searchTagList:null,sellOut:'',catHtml:function(cat){if(typeof cat!=='object'||cat.length==0){return false;}
+var catHtml='<dl class="cat-list">';catHtml+='<dt>'+cat.name+'：</dt>';catHtml+='<dd class="active"><a href="javascript:void(0);">全部'+cat.name+'</a></dd>';for(var i in cat.content){if(cat.content.hasOwnProperty(i)){var idStr=cat.content[i].cat_ids.split(',').join('-');catHtml+='<dd class="sub-cat sub-cat-'+idStr+'"><a data-ids="'+cat.content[i].cat_ids+'">'+cat.content[i].name+'</a></dd>';}}
+catHtml+='</dl>';return catHtml;},tagsHtml:function(tags){if(typeof tags!=='object'){return false;}
+var tagsHtml='';for(var i in tags){if(!tags.hasOwnProperty(i)){continue;}
+var tag=tags[i];tagsHtml+='<dl class="tag-list">';tagsHtml+='<dt>'+tag.name+'：</dt>';tagsHtml+='<dd class="active tag-title"><a href="javascript:void(0);">全部'+tag.name+'</a></dd>';for(var j in tag.content){if(tag.content.hasOwnProperty(j)){tagsHtml+='<dd class="sub-tag sub-tag-'+tag.content[j].id+'"><a data-id="'+tag.content[j].id+'">'+tag.content[j].name+'</a></dd>';}}
+tagsHtml+='</dl>';}
+return tagsHtml;},goodsListHtml:function(goodsObj){if(typeof goodsObj!=='object'){return false;}
+var goodsHtml='';for(var j in goodsObj){if(!goodsObj.hasOwnProperty(j)){continue;}
+var goodsInfo=goodsObj[j];goodsHtml+='<div class="pro-list-title" id="list-title-'+j+'">';goodsHtml+='<h2>'+goodsInfo.title+'<span>'+goodsInfo.description+'</span></h2>'+'</div>';goodsHtml+='<ul class="pro-list-pr">';var hasStockHtml='';for(var i in goodsInfo.goods){if(!goodsInfo.goods.hasOwnProperty(i)){continue;}
+var goods=goodsInfo.goods[i];if(goods.has_stock){hasStockHtml+=goodsList.goodsHtml(goodsInfo.cat_ids,goods);}else{goodsList.sellOut+=goodsList.goodsHtml(goodsInfo.cat_ids,goods);}}
+goodsHtml+=hasStockHtml+'</ul>';}
+return goodsHtml;},sellOutHtml:function(){if(goodsList.sellOut==''){return'';}
+var html='';html+='<div class="pro-list-title" id＝"list-sell-out">';html+='<h2>季节性下线<span>在合适的季节，吃恰当的食物</span></h2>'+'</div>';html+='<ul class="pro-list-pr">';html+=goodsList.sellOut;html+='</ul>';goodsList.sellOut='';return html;},goodsHtml:function(catIds,goodsObj){var html='';if(typeof goodsObj!=='object'){return html;}
+html+='<li id="list-goods-'+goodsObj.cake_goods_id+'">';html+='<div class="pro-list-su">';html+='<a href="/goods-'+goodsObj.cake_goods_id+'.html" target="_blank" class="goods-list">';html+='<img src="'+Global.staticDomain+'/themes/site/img/list-img.png"  data-original="'+Global.staticDomain+goodsObj.img_url+'" class="lazy" alt="'+goodsObj.name+'">';html+='<h3>'+goodsObj.name+'</h3>';html+='<span>¥'+goodsObj.price+'/'+goodsObj.spec+'</span>';html+='</a>';if(goodsObj.hasOwnProperty('tags')){html+='<div class="label-entrance">';lengthText=0;for(var i in goodsObj.tags){if(i>2){break;}
+var tagInfo=goodsObj.tags[i];lengthText+=tagInfo.content.length;if(lengthText>10){break;}
+html+='<a href="/gallery/tag/'+tagInfo.id+'.html">'+tagInfo.content+' ></a>';}
+html+='</div>';}
+html+=goodsObj.has_stock?'<a href="javascript:void(0);" name="pro-list-addcart_'+goodsObj.cake_goods_id+'" class="pro-list-addcart" data-id="'+goodsObj.cake_goods_id+'"><i></i>加入购物车</a>':'';if(goodsObj.label.length>=1){html+='<div class="label"><img src="'+goodsObj.label[0].icon+'"/></div>';}
+html+='</div>';html+='<div class="pro-specifications" data-id="'+goodsObj.cake_goods_id+'">';html+='</div>';if(!goodsObj.has_stock){html+='<a class="pro-floridian"  href="/goods-'+goodsObj.cake_goods_id+'.html" target="_blank">';html+='<span>敬请期待</span><a class="to-notify-btn" href="javascript:void(0);" data-id="'+goodsObj.product_id+'"><i></i>到货通知</a>';html+='<div class="addcart-dialog to-notify-dialog" style="display:none"></div>';html+='</a>';}
+html+='</li>';return html;},specHtmlMultiply:function(data,goodsId,specDom){var productsArr=data.productsArr.shift();galleryCache.setProducts(productsArr.productsArr);specDom.html(goodsList.cartHtml(productsArr.productsArr,goodsId)).show();var html='';html+='<p class="spec-title">'+data.title+'</p>';html+='<ul>';html+='<li><a href="javascript:void(0);" class="active" data-name="'+productsArr.name+'">'+productsArr.name+'<i></i></a></li>';html+="<li><a href='/goods-"+goodsId+".html'>更多></a></li>";html+='</ul>';specDom.find('.extra-box').html(html).show();},cartHtml:function(products,goodsId){var cartHtml='';var price='';var specHtml='';for(var i in products){if(!products.hasOwnProperty(i)){continue;}
+var product=products[i];if(product.pound=='more'){continue;}
+if(product.is_default==='true'){price+=product.price;$('input[name=productId]').val(product.id);specHtml+='<li><a href="javascript:void(0);" class="active" data-id="'+product.id+'">'+product.spec+'<i></i></a></li>';}else{specHtml+='<li><a href="javascript:void(0);" data-id="'+product.id+'">'+product.spec+'<i></i></a></li>';}}
+cartHtml+='<h4>￥'+price+'</h4>';cartHtml+='<div class="extra-box" hidden>';cartHtml+='<p class="spec-title">商品规格</p>';cartHtml+='<ul>'+specHtml+'</ul>';cartHtml+='</div>';cartHtml+='<p class="spec-title">商品规格</p>';cartHtml+='<ul class="normal-spec">'+specHtml+'</ul>';cartHtml+='<div class="buy-button">';cartHtml+='<button class="pro-buy-now" name="pro-buy-now_'+goodsId+'">立即购买</button>';cartHtml+='<button class="pro-add-cart" name="pro-add-cart_'+goodsId+'">加入购物车</button>';cartHtml+='</div>';return cartHtml;},cartWaitHtml:function(){var cartWaitHtml='';cartWaitHtml+='<div class="addcart-success">';cartWaitHtml+='<span></span>';cartWaitHtml+='</div>';return cartWaitHtml;},cartSuccessHtml:function(url,showLook){var html='';html+='<div class="addcart-success">';html+='<div>';html+='<p><i></i>成功添加购物车</p>';if(showLook){html+='<a href="'+url+'" class="details-go-cart" target="_blank">查看购物车</a>';}
+html+='</div>';html+='</div>';return html;},searchHtml:function(catActiveIds,tagActiveIdArr){var goodsObj=galleryCache.getGoodsList();if(typeof goodsObj!=='object'){return false;}
+if(catActiveIds===undefined&&tagActiveIdArr.length===0){var subTag=$('dd.sub-tag');subTag.removeClass('disabled');var html=''
+html+=goodsList.goodsListHtml(goodsObj);html+=goodsList.sellOutHtml();$('.pro-list-box').html(html);return true;}
+var searchHtml='';goodsList.searchCatList=new Array(0);goodsList.searchTagList=new Array(0);var hasStockHtml='';var noStockHtml='';for(var j in goodsObj){if(!goodsObj.hasOwnProperty(j)){continue;}
+var goodsInfo=goodsObj[j];for(var i in goodsInfo.goods){if(!goodsInfo.goods.hasOwnProperty(i)){continue;}
+var goods=goodsInfo.goods[i];if(tagActiveIdArr!==undefined){var tagIdArr=goods.tag_ids.split(',');if((tagActiveIdArr.length!==0&&!goodsList.searchCheck(tagActiveIdArr,tagIdArr))||(catActiveIds!==undefined&&goodsInfo.cat_ids!==catActiveIds)){continue;}}
+goodsList.searchCatList.push(goodsInfo.cat_ids);goodsList.storeSearchTagList(goods.tag_ids);searchHtml+=goodsList.goodsHtml(goodsInfo.cat_ids,goods);if(goods.has_stock){hasStockHtml+=goodsList.goodsHtml(goodsInfo.cat_ids,goods);}else{noStockHtml+=goodsList.goodsHtml(goodsInfo.cat_ids,goods);}}}
+if(hasStockHtml===''&&noStockHtml===''){searchHtml='<div class="pro-list-empty"><img src="'+Global.staticDomain+'/themes/site/img/pro-list-empty.jpg" alt=""><span>没有。</span></div>';$('.pro-list-box').html(searchHtml);return false;}
+searchHtml='<ul class="pro-list-pr">'+hasStockHtml+noStockHtml+'</ul>';$('.pro-list-box').html(searchHtml);},storeSearchTagList:function(tagIds){var tagIdArr=tagIds.split(',');for(var i in tagIdArr){if(!tagIdArr.hasOwnProperty(i)){continue;}
+goodsList.searchTagList.push(tagIdArr[i]);}},searchCheck:function(tagActiveIdArr,tagIdArr){var match=false;for(var i in tagActiveIdArr){if(!tagActiveIdArr.hasOwnProperty(i)){continue;}
+for(var j in tagIdArr){if(!tagIdArr.hasOwnProperty(j)||tagActiveIdArr.length>tagIdArr.length){continue;}
+if(tagActiveIdArr[i]==tagIdArr[j]){match=true;break;}}
+if(!match){break;}}
+return match;}};});

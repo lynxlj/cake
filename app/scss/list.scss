@@ -1,0 +1,66 @@
+@import "fixStyle";
+@import "listBoxStyle";
+$aColor:#684029;
+$ahoverColor:#D5BFA7;
+.content{
+    .list-filter{
+        margin: 0 auto;
+        font-size: 13px;
+        margin-top: 25px;
+        margin-bottom: 35px;
+        width: 1200px;
+        border-top: 1px solid #f2f2f2;
+        border-bottom: 1px solid #f2f2f2;
+        overflow: hidden;
+        padding: 8px 0;
+        dl{
+            line-height: 50px;
+            overflow: hidden;
+            height: 50px;
+            dt{
+                color: #9b9b9b;
+                margin-right: 38px;
+                float: left;
+                margin: 0 13px;
+                 
+            }
+            dd{
+                float: left;
+                margin: 0 13px;
+                 
+            }
+           a{
+                color: #684029;
+                &:hover{
+                    color: #D5BFA7;
+                }
+            }
+        }
+    }
+    .page{
+        text-align: center;
+        margin-bottom: 10px;
+        .pagination{
+            height: 30px;
+            color: #684029;
+            display: inline-block;
+            margin: 0 auto;
+            li{
+                
+                float: left;
+                padding: 5px 15px ;
+                a{
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    background: #D5BFA7;
+                    color: #fff;
+                    font-size:14px ;
+                    border-radius: 50%;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+    
+}

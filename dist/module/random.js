@@ -1,0 +1,1 @@
+"use strict";define(function(){function n(){}return n.prototype.init=function(){for(var n=document.getElementById("cont"),t="123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP",e=[],r=0;r<4;r++){var o=parseInt(Math.random()*t.length);e.push(t[o])}var i=e.join("");return n.innerHTML=i},new n});

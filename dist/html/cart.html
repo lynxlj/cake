@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="/css/cart.css">
+		<script type="text/javascript" src="/libs/require.js" data-main="/js/cart.js"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<div class="header" id="header"></div>
+		<!--content-->
+		<div class="content" >
+			<div id="cart" class="cart-goods-info cart-area cart-list">
+		        <ul class="thead-ul">
+		            <li class="goods-ti">商品</li>
+		            <li class="birthday-card-ti">生日牌</li>
+		            <li class="unit-Price">单价</li>
+		            <li class="number-ti">数量</li>
+		            <li class="money-ti" colspan="2">金额</li>
+		        </ul>
+		        <div class="tbody-ul">
+		            <table>
+		                <tbody id="each_pro">
+		                	<!--product-->
+							<script type="text/html" id="list">
+							{{each data}}	
+		                	<tr  class="cart-object-item scene_area " >
+		                    	<td class="goods-img">
+			                        <a href="javascript:" target="_blank">
+			                            <img src={{$value.src}} >
+			                        </a>
+		                   		</td>
+			                    <td class="goods-cake">
+			                        <div>
+			                            <h4 class="cart-title">
+			                                <a href="javascript:" target="_blank">{{$value.name}}</a>
+			                            </h4>
+			                            <span class="goods-spec">规格：<span>{{$value.size}}</span></span>
+	                                    <span class="goods-laid"><i></i>赠送<b>&nbsp;10&nbsp;</b>套餐具</span>
+	                                </div>
+			                    </td>
+			                    
+			                    <td class="select-birthday-td">
+			                    	{{if $value.type}}
+	                                    <div class="select-birthday" data-spec="2.0磅" data-num="0">
+			                            <div class="action-birthday_card"><span>选择生日牌</span><i></i>
+			                            	<ul class="action-birthday-options">
+		                                        <li class="birthday-card-option">生日快乐</li>
+		                                        <li class="birthday-card-option">Happy Birthday</li>
+		                                        <li class="birthday-card-option">节日快乐</li>
+				                            </ul>
+			                            </div>
+			                        </div>
+			                        {{/if}}
+	                			</td>
+			                    <td class="cart-unit-Price">{{$value.price}}</td>
+			                    <td class="number-li">
+			                        <div class="number quantity-update">
+			                            <input type="button" class="minus" >
+			                            <input type="text" readonly="readonly" class="pro_num" value={{$value.num}} >
+			                            <input type="button" class="plus" >
+			                        </div>
+			                    </td>
+			                    <td class="money" id="total_amount_goods_55_3162">
+			                        {{$value.price*$value.num}} </td>
+			                    <td class="delete"><a href="javascript:" data-indent="goods_55_3162"><i></i></a></td>
+			                </tr>
+			                {{ /each }}
+			                </script>
+		            	</tbody>
+		           	</table>
+		        </div>
+		    </div>
+			<div class="cart-empty" style="display: none;">
+				<img src="/images/cartImg/cartempty.png">
+				<span>您的购物车里还没有商品</span>
+				<a href="/html/cake.html">去购物 &gt;&gt;</a>
+			</div>
+			<!--结算部分-->
+		    <div class="cart-submit cart-area ">
+		        <a href="#" class="cart-submit-empty clear"><i></i>全部清空</a>
+		        <ul class="cart-total-detail">
+		        	<li class="allMoney">
+		        	</li> 
+		        	<li class="ps">配送费：¥ 0.00</li> 
+		        	<li>活动优惠：¥ 0.00</li>
+		        </ul>
+		        <div class="cart-total"><span>合计：¥<span class="lastAllMoney"></span></span></div>
+		        <span class="cart-balance" id="cost-freight-tip">订单满￥100元,享免费配送服务</span>
+		
+		        <div class="cart-submit-button"><a href="javascript:void(0);" name="action-submit-btn" id="action-submit-btn">去结算</a></div>
+		    </div>
+			<!--商品推荐-->
+			<div class="details-recommend" style="">
+		        <h2>商品推荐</h2>
+		        <ul class="recommend-list">
+		        	<li>
+		        		<a href="javascript:" target="_blank">
+		        			<img src="/images/listImg/cake1.jpg" alt="浅草" title="浅草">
+		        		</a>
+		        	</li>
+		        	<li>
+		        		<a href="javascript:" target="_blank">
+		        			<img src="/images/listImg/cake2.jpg" alt="黑白巧克力慕斯" title="黑白巧克力慕斯">
+		        		</a>
+		        	</li>
+		        	<li>
+		        		<a href="javascript:" target="_blank">
+		        			<img src="/images/listImg/cake3.jpg" alt="百利甜情人" title="百利甜情人">
+		        		</a>
+		        	</li>
+		        	<li>
+		        		<a href="javascript:" target="_blank">
+		        			<img src="/images/listImg/cake4.jpg" alt="中秋坚果芝士慕斯" title="中秋坚果芝士慕斯">
+		        		</a>
+		        	</li>
+		        </ul>
+		    </div>
+		    
+		</div>
+		
+		<!-- footer -->
+		<div class="footer" id="footer"></div>
+	</body>
+</html>

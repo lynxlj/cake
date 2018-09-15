@@ -1,0 +1,1 @@
+"use strict";define(function(){function i(){}return i.prototype.init=function(i,s){$(i+" li").click(function(){$(this).addClass("ac").siblings().removeClass("ac"),$(i+" "+s).eq($(this).index()).addClass("ac").siblings().removeClass("ac")})},new i});

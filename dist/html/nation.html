@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>咖啡全国配送</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="/css/nation.css">
+		<script type="text/javascript" src="/libs/require.js" data-main="/js/nation.js"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<div class="header" id="header"></div>
+		<!--banner-->
+		<div class="banner"></div>
+		<!--content-->
+		<div class="content" id="content">
+			<div class="list-box" id="coffee">
+				<ul class="list-pro" id="list-pro">
+					<!--蛋糕类-->
+				</ul>	
+				<script type="text/html" id="list">
+				{{each data item index}}
+				<li>
+					<div class="pro-det">
+						<a target="_blank" class="skip">
+							<img src={{item.pic}} style="display: inline;"/>
+							<h3>{{item.name}}</h3>
+							<span>￥{{item.price}}.00/包</span>
+						</a>
+						<div class="label"><a href="javasrcipt:" style="opacity: 0;">{{item.link}}&gt;</a>
+						</div>
+						<a href="javascript:void(0);" class="pro-list-addcart" ><i></i>加入购物车</a>
+						<div class="spec-detail" style="display: none;">   
+							<div class="exit" style="position: absolute;background: #7A5844;color: white;right: 0;top: -20px;width: 20px;cursor: pointer;text-align: center;">X</div>
+							
+							<div class="buttons">                    
+								<div class="button left buy-now"  name="buy_now_1_750">立即购买</div>                    
+								<div class="button coffee right add-to-cart" data-id="750" name="add_to_cart_1_750" id="add">加入购物车</div>
+							</div>            
+						</div>
+					</div>
+				</li>
+				{{ /each }}
+				</script>
+			</div>	
+			<div class="order-info">
+				<h2>订单信息</h2>
+				<form action="" class="create-order">
+					<div class="order-content">
+						<div class="order-left">
+							<ul>
+								<li>
+									<label>收货人：</label>
+									<input type="text" name="" id="" placeholder="收货人姓名" />
+									<span>请输入收货人姓名</span>
+								</li>
+								<li>
+									<label>联系方式：</label>
+									<input type="text" name="" id="" placeholder="收货人的联系方式" />
+									<span>请输入收货人的联系方式</span>
+								</li>
+								<li class="city-list">
+									<label>城市：</label>
+									<select name="" id="province">省</select>
+									<select name="" id="city">市</select>
+									<select name="" id="town">县</select>
+								</li>
+								<li class="address-list">
+									<label for="">详细地址：</label>
+									<textarea name="address" id="" cols="30" rows="10" placeholder="请输入详细地址"></textarea>
+									<span id="addressList">请填写配送信息</span>
+								</li>
+							</ul>
+						</div>
+						<div class="order-right">
+							<p>商品金额：¥<span id="item_cost">0.00</span></p>
+							<p>配送费：¥<span id="item_ship_fee">10.00</span></p>
+							<div class="total-amount"><p>合计：¥<span id="total_amount">0.00</span></p></div>
+							<p class="last-p">发货及到货时间参考产品详情页说明</p>
+							<div class="total-button">
+                            <input type="submit" value="在线付款" class="button disabled" disabled="">
+                        </div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- footer -->
+		<div class="footer" id="footer"></div>
+	</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商品详情</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="/css/product.css">
+		<script type="text/javascript" src="/libs/require.js" data-main="/js/product.js"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<div class="header" id="header"></div>
+		<!--content-->
+		<div class="content">
+			<!--商品介绍-->
+			<div class="details-banner"></div>
+			<script type="text/html" id="bannerList">
+			{{each data item index}}
+	            <div class="left-img-box">
+	                <div class="video-box">
+	                    {{if item.nav1}}<img class="otherImg ac" src={{item.nav1}}  >{{/if}}
+	                    {{if item.nav2}}<img class="otherImg" src={{item.nav2}} >{{/if}}
+	                    {{if item.nav3}}<img class="otherImg" src={{item.nav3}} >{{/if}}
+	                    {{if item.nav4}}<img class="otherImg" src={{item.nav4}} >{{/if}}
+	                </div>
+	            </div>
+		        <!--商品广告图-->
+		        <div class="right-list">
+		            <a href="" class="top-banner"></a>
+		            <ul id="bannerImgList">
+		                 {{if item.nav1}}<li class="bannerchoice ac">
+		                        <img  class="bannerList" src={{item.nav1}} >                                
+		                </li>{{/if}}
+		                {{if item.nav2}}<li class="bannerchoice">
+		                        <img  class="bannerList" src={{item.nav2}} >                                
+		                </li>{{/if}}
+		                {{if item.nav3}}<li class="bannerchoice">
+		                        <img   class="bannerList" src={{item.nav3}} >                                
+		                </li>{{/if}}
+		                {{if item.nav4}}<li class="bannerchoice">
+		                       <img  class="bannerList" src={{item.nav4}} >                                
+		                </li>{{/if}}            
+		            </ul>
+		        </div>
+			{{ /each }}
+			</script>
+			<!--商品详情介绍-->
+			<div class="pro-details-cont">
+            	<div class="details-content-left">
+                	<h1 class="pro-details-title"></h1>
+                	<div class="sub-title"><p></p></div>
+                	<div class="pro-details-label">
+                    	<a target="_blank" class="link"></a>
+                    </div>
+                    <ul class="details-constituent">
+	                    <li style="font-size: 16px;" class="group">
+	                    </li>
+                    </ul>
+                	<ul class="details-distribution">
+                        <li class="distribution-exist"><i></i><span>保鲜条件：</span>0－4℃保藏10小时，5℃食用为佳</li>
+                </ul>
+            </div>
+            <!-- 价格显示 -->
+			 <div class="details-content-right">
+                <div class="details-Specifications">
+                  	<div class="outer-box" id="outer-box">
+                    </div>
+                <script type="text/html" id="list">
+					{{each data item index}}
+						<div class="details-img-box">
+                        	{{if item.price1}}<div class="img-box"><img src="/images/proImg/1.00P-full-13.50.jpg" class="details-img" id="myimg"><ul class="details-options fl-left"><li class="details-options-size"><i></i>13.5x13.5c</li><li class="details-options-unmber"><i></i>适合3-4人分享</li><li class="details-options-laid"><i></i>含5套餐具</li><li class="details-options-time"><i></i>最早明天 10:00配送</li></ul>
+                        		<p class="details-price"><span>{{item.price1}}.00</span>/1.0磅</p>
+                        	</div>{{/if}}
+                           {{if item.price2}}<div class="img-box ac"><img src="/images/proImg/2.00P-full-17.00.jpg" class="details-img"><ul class="details-options fl-left"><li class="details-options-size"><i></i>17x17cm</li><li class="details-options-unmber"><i></i>适合7-8人分享</li><li class="details-options-laid"><i></i>含10套餐具</li><li class="details-options-time"><i></i>最早明天 10:00配送</li></ul>
+                           	<p class="details-price"><span>{{item.price2}}.00</span>/2.0磅</p>
+                           </div>{{/if}}
+                           {{if item.price3}}<div class="img-box"><img src="/images/proImg/3.00P-full-24.00.jpg" class="details-img"><ul class="details-options fl-left"><li class="details-options-size"><i></i>24x24cm</li><li class="details-options-unmber"><i></i>适合11-12人分享</li><li class="details-options-laid"><i></i>含15套餐具</li><li class="details-options-time"><i></i>最早明天 10:00配送</li></ul>
+                           	<p class="details-price"><span>{{item.price3}}.00</span>/3.0磅</p>
+                           </div>{{/if}}
+                           {{if item.price4}}<div class="img-box"><img src="/images/proImg/5.00P-full-31.00.jpg" class="details-img"><ul class="details-options fl-left"><li class="details-options-size"><i></i>31x31cm</li><li class="details-options-unmber"><i></i>适合15-20人分享</li><li class="details-options-laid"><i></i>含20套餐具</li><li class="details-options-time"><i></i>最早明天 10:00配送</li></ul>
+                           	<p class="details-price"><span>{{item.price4}}.00</span>/5.0磅</p>
+                           </div>{{/if}}
+                           {{if item.price&&!item.nav4}}<div class="img-box ac"><img src="/images/proImg/ice-cream.jpg" class="details-img"><ul class="details-options fl-left"><li class="details-options-size"><i></i>80g</li><li class="details-options-unmber"><i></i>适合1人分享</li><li class="details-options-laid"><i></i>含一包竹勺</li><li class="details-options-time"><i></i>最早今天14:00配送</li></ul>
+                           	<p class="details-price"><span>{{item.price}}.00</span>/ 一 份</p>
+                           </div>{{/if}}
+                            {{if item.price&&!item.link}}<div class="img-box ac"><!--<img src="/images/proImg/ice-cream.jpg" class="details-img">--><ul class="details-options fl-left"><li class="details-options-size"><i></i>10g</li><li class="details-options-unmber"><i></i>适合1人分享</li><li class="details-options-laid"><i></i>无</li><li class="details-options-time"><i></i>最早今天14:30配送</li></ul>
+                           	<p class="details-price"><span>{{item.price}}.00</span>/ 一 份</p>
+                           </div>{{/if}}
+                           {{if item.price&&item.link&&item.nav4}}<div class="img-box ac"><ul class="details-options fl-left"><li class="details-options-size"><i></i>30g</li><li class="details-options-unmber"><i></i>适合1人分享</li><li class="details-options-laid"><i></i>无</li><li class="details-options-time"><i></i>最早今天14:00配送</li></ul>
+                           	<p class="details-price"><span>{{item.price}}.00</span>/ 一 份</p>
+                           </div>{{/if}}
+                       	</div>
+                        <dl class="details-Specifications-size" style="height: 50px;">
+                            <dt>商品规格</dt>
+                            <dd>
+                                <ul class="size">{{if item.price1}}<li ><a >1.0磅<i></i></a></li>{{/if}}{{if item.price2}}<li class="ac"><a >2.0磅<i></i></a></li>{{/if}}{{if item.price3}}<li><a >3.0磅<i></i></a></li>{{/if}}{{if item.price4}}<li><a >5.0磅<i></i></a></li>{{/if}}{{if item.price}}<li class="ac"><a >一 份<i></i></a></li>{{/if}}</ul>
+                            </dd>
+                        </dl>
+                        
+	                    <div class="details-button" id="product">
+	                        <button href="javascript:void(0);" class="details-but-buy" name="details-but-buy_bottom" style="cursor: pointer;">立即购买</button>
+	                        <button href="javascript:void(0);" class="details-but-cart detailsAddCart" name="details-but-cart_bottom" id="add" style="cursor: pointer;">加入购物车
+	                        </button>
+	                    </div>
+	                    <div class="addcart-dialog">
+	                        <div>
+	                            <p><i></i>成功添加购物车</p>
+	                            <a class="details-go-cart" name="details-go-cart_bottom">查看购物车</a>
+	                        </div>
+	                        <i></i>
+	                    </div>
+					{{ /each }}
+				</script>
+                      
+                </div>
+            </div>
+            <!--详情图-->
+            <div class="details-introduction">     
+        	</div>
+        	<script type="text/html" id="pics">
+			{{each data item index}}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				{{if item.content1}}<img style="max-width: 100%;" class="pic_introduction" src={{item.content1}} >{{/if}}
+				{{if item.content2}}<img style="max-width: 100%;" class="pic_introduction" src={{item.content2}} >{{/if}}
+				{{if item.content3}}<img style="max-width: 100%;" class="pic_introduction" src={{item.content3}}>{{/if}}
+				{{if item.content4}}<img style="max-width: 100%;" class="pic_introduction" src={{item.content4}}>{{/if}}
+				{{if item.content5}}<img style="max-width: 100%;" class="pic_introduction" src={{item.content5}} >{{/if}} 
+			{{ /each }}
+			</script>
+		</div>
+		<!--商品推荐-->
+		<div class="details-recommend" style="">
+	        <h2>商品推荐</h2>
+	        <ul class="recommend-list">
+	        	<li>
+	        		<a href="javascript:" target="_blank">
+	        			<img src="/images/listImg/cake1.jpg" alt="浅草" title="浅草">
+	        		</a>
+	        	</li>
+	        	<li>
+	        		<a href="javascript:" target="_blank">
+	        			<img src="/images/listImg/cake2.jpg" alt="黑白巧克力慕斯" title="黑白巧克力慕斯">
+	        		</a>
+	        	</li>
+	        	<li>
+	        		<a href="javascript:" target="_blank">
+	        			<img src="/images/listImg/cake3.jpg" alt="百利甜情人" title="百利甜情人">
+	        		</a>
+	        	</li>
+	        	<li>
+	        		<a href="javascript:" target="_blank">
+	        			<img src="/images/listImg/cake4.jpg" alt="中秋坚果芝士慕斯" title="中秋坚果芝士慕斯">
+	        		</a>
+	        	</li>
+	        </ul>
+	    </div>
+		<!-- footer -->
+		<div class="footer" id="footer"></div>
+	</body>
+</html>

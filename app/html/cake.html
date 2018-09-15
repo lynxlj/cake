@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商品分类</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="/css/list.css">
+		<script type="text/javascript" src="/libs/require.js" data-main="/js/cake.js"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<div class="header" id="header"></div>
+		<!--content-->
+		<div class="content" id="content">
+			<div class="list-filter">
+				<dl class="type-list">
+					<dt>分类:</dt>
+					<dd>
+						<a href="javascript:" style="pointer-events: none;">全部分类</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="cake">蛋糕</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="ice">冰淇淋</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="coffee">咖啡下午茶</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="norcake">常温蛋糕</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="design">设计师礼品</a>
+					</dd>
+				</dl>
+				<dl class="tag-list">
+					<dt>口味:</dt>
+					<dd>
+						<a href="javascript:" style="pointer-events: none;">全部口味</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="a">乳脂奶油</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="b">慕斯</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="c">乳酪</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="d">巧克力</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="e">坚果</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="f">水果</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="g">含酒</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="h">咖啡</a>
+					</dd>
+					<dd>
+						<a href="javascript:" class="i">冰淇淋</a>
+					</dd>
+				</dl>
+			</div>
+			<div class="list-box" id="cake">
+				<ul class="list-pro" id="list-pro">
+					<!--蛋糕类-->
+				</ul>	
+				<script type="text/html" id="list">
+				{{each data item index}}
+				<li>
+					<div class="pro-det">
+						<a target="_blank" class="pro">
+							<img src={{item.pic}} style="display: inline;"/>
+							<h3>{{item.name}}</h3>
+							<span>￥{{item.price2}}.00/2.0磅</span>
+						</a>
+						<div class="label"><a href="javasrcipt:">{{item.link}}&gt;</a>
+						</div>
+						<a href="javascript:void(0);" class="pro-list-addcart" ><i></i>加入购物车</a>
+						<div class="spec-detail" style="display: none;">   
+							<div class="exit" style="position: absolute;background: #7A5844;color: white;right: 0;top: 0;width: 20px;cursor: pointer;text-align: center;">X</div>
+							<div class="spec-title">{{if item.price1}}<span>￥{{item.price1}}.00/1.0磅</span>{{/if}}<span class="ac">￥{{item.price2}}.00/2.0磅</span>{{if item.price3}}<span>￥{{item.price3}}.00/3.0磅</span>{{/if}}{{if item.price4}}<span>￥{{item.price4}}.00/5.0磅</span>{{/if}}</div>                
+							<div class="spec-info">{{if item.price1}}<a  href="javascript:void(0);">1.0磅<i></i></a>{{/if}}<a class="ac" href="javascript:void(0);" class="active">2.0磅<i></i></a>{{if item.price3}}<a href="javascript:void(0);">3.0磅<i></i></a>{{/if}}{{if item.price4}}<a href="javascript:void(0);">5.0磅<i></i></a>{{/if}}</div>
+							<div class="buttons">                    
+								<div class="button left buy-now" >立即购买</div>                    
+								<div class="button coffee right add-to-cart" id="add">加入购物车</div>
+							</div>            
+						</div>
+					</div>
+				</li>
+				{{ /each }}
+				</script>
+			</div>
+			<div class="page"><ul class="pagination" id="pagination"> </ul></div>
+			
+		</div>
+		
+		<!-- footer -->
+		<div class="footer" id="footer"></div>
+	</body>
+</html>

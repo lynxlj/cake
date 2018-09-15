@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="/css/login.css">
+		<script type="text/javascript" src="/libs/require.js" data-main="/js/login.js"></script>
+	</head>
+	<body>
+	<!-- header -->
+	<div class="header" id="header"></div>
+	<!--content-->
+	<div class="login-content">
+		<div class="login-form">
+			<div class="form-title">
+				<h2>账户密码登录</h2>
+			</div>
+			<div class="form-content">
+				<form action="" id="login-form">
+					<ul>
+						<li><input type="text" name="" id="user" placeholder="请输入您的账号(手机号码)" />
+							<br/><span class="error">必须填写手机号</span></li>
+						<li><input type="password" name="" id="pwd" placeholder="请输入您的密码" />
+							<br/><span class="error">必须填写密码</span></li>
+						<li style="height: 36px;"><input type="text" id="isCode" placeholder="输入验证码" style="width: 180px;float: left;margin-left: 17px;"/><span id="cont" style="display: inline-block;width: 85px;height:36px;background: #442818;color:white;float: right;margin-right: 17px;font-size: 18px;line-height: 36px;"></span>
+							</li>
+						<li><a id="change-cont" style="display: block;float: right;margin-right: 35px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none; user-select:none;">换一张</a>
+							<br/><span class="error">填写验证码错误</span></li>
+						<li><input type="submit" name="" id="login-btn" value="登录" /></li>
+					</ul>
+					<div class="login-remember">
+						<label style="float: left;">
+							<input type="checkbox" name="rememberMe" id="rememberMe" checked="checked"/>
+							&nbsp;记住账号
+							<a href="/html/register.html" >去注册</a>
+							<a href="javascript:"style="margin-left: 120px;">忘记密码</a>
+						</label>
+					</div>
+				</form>
+			</div>
+			<div class="login-bottom">
+			</div>
+		</div>
+	</div>
+	<!-- footer -->
+	<div class="footer" id="footer"></div>
+	</body>
+</html>

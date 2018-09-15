@@ -1,0 +1,1 @@
+"use strict";define(function(){function t(){}return t.prototype.init=function(){$("#footer").load("/html/footer.html",function(){})},new t});
